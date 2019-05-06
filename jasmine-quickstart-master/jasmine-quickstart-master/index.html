@@ -1,0 +1,273 @@
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="./jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="./jasmine/jasmine.css">
+    <link rel="stylesheet" type="text/css" href="./jasmine/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript" src="./jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="./jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="./jasmine/boot.js"></script>
+    <script type="text/javascript" src="./jasmine/script.js"></script>
+</head>
+
+
+<body>
+        <h1>Pin Bowling Calculator</h1>
+        <p>Enter a number that will sum to the maximum of 10 in each of the "T" boxes</p>
+        <div style="overflow-x:auto;">
+            <input type="hidden" value="0" id="currentSum" />
+            <table>
+                <tr>
+                    <th>Frame 1</th>
+                    <th>Frame 2</th>
+                    <th>Frame 3</th>
+                    <th>Frame 4</th>
+                    <th>Frame 5</th>
+                    <th>Frame 6</th>
+                    <th>Frame 7</th>
+                    <th>Frame 8</th>
+                    <th>Frame 9</th>
+                    <th>Frame 10</th>
+                </tr>
+                <tr>
+                    <td id="frame1">
+                        <input class="inputUp" id="frame1_1" type="text" placeholder="T1"></input>
+                        <input class="inputUp" id="frame1_2" type="text" placeholder="T1"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame1"></input>
+                    </td>
+    
+                    <td id="frame2">
+                        <input class="inputUp" id="frame2_1" type="text" placeholder="T2"></input>
+                        <input class="inputUp" id="frame2_2" type="text" placeholder="T2"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame2"></input>
+                    </td>
+    
+                    <td id="frame3">
+                        <input class="inputUp" id="frame3_1" type="text" placeholder="T3"></input>
+                        <input class="inputUp" id="frame3_2" type="text" placeholder="T3"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame3"></input>
+                    </td>
+    
+                    <td id="frame4">
+                        <input class="inputUp" id="frame4_1" type="text" placeholder="T4"></input>
+                        <input class="inputUp" id="frame4_2" type="text" placeholder="T4"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame4"></input>
+                    </td>
+    
+                    <td id="frame5">
+                        <input class="inputUp" id="frame5_1" type="text" placeholder="T5"></input>
+                        <input class="inputUp" id="frame5_2" type="text" placeholder="T5"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame5"></input>
+                    </td>
+    
+                    <td id="frame6">
+                        <input class="inputUp" id="frame6_1" type="text" placeholder="T6"></input>
+                        <input class="inputUp" id="frame6_2" type="text" placeholder="T6"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame6"></input>
+                    </td>
+    
+                    <td id="frame7">
+                        <input class="inputUp" id="frame7_1" type="text" placeholder="T7"></input>
+                        <input class="inputUp" id="frame7_2" type="text" placeholder="T7"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame7"></input>
+                    </td>
+    
+                    <td id="frame8">
+                        <input class="inputUp" id="frame8_1" type="text" placeholder="T8"></input>
+                        <input class="inputUp" id="frame8_2" type="text" placeholder="T8"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame8"></input>
+                    </td>
+    
+                    <td id="frame9">
+                        <input class="inputUp" id="frame9_1" type="text" placeholder="T9"></input>
+                        <input class="inputUp" id="frame9_2" type="text" placeholder="T9"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame9"></input>
+                    </td>
+    
+                    <td id="frame10">
+                        <input class="inputUp" id="frame10_1" type="text" placeholder="T10"></input>
+                        <input class="inputUp" id="frame10_2" type="text" placeholder="T10"></input>
+                        <br>
+                        <input class="inputBottom" type="text" desc-data="frame10"></input></td>
+                </tr>
+    
+            </table>
+            <button onclick="getThrow()">Show Throws</button>
+        </div>
+    
+    </body>
+
+
+
+    <script>
+
+        function getScore(player1, player2){
+            var player1Score = player1.totalScore;
+            var player2Score = player2.totalScore;
+
+            return player1Score, player2Score;
+        }
+
+        function players(player1, player2){
+            return `Player 1s name is ${player1}. Player 2s name is ${player2}`;
+        }
+
+        function checkStrike(firstRoll, secondRoll){
+            if(firstRoll == 10 && secondRoll == undefined){
+                return `Its a STRIKE`;
+            }
+        }
+        
+        function checkSpare(firstRoll, secondRoll){
+            if(firstRoll + secondRoll == 10){
+                return `Its a SPARE`;
+            }
+        }
+
+        function checkLeader(player1, player2, totalPins){
+            
+            if(player1.totalPins > player2.totalPins){
+                return `Player 1 is leading`;
+            } else if(player2.totalPins > player1.totalPins){
+                return `Player 2 is leading`;
+            }else if(player1.totalPins == player2.totalPins){
+                return `Its a tie`;
+            } else{
+                return `Score undefined`;
+            }
+        }
+
+        function numOfTurnsLeft(playerScore, numOfRolls, turns){
+            if(playerScore == 10 || numOfRolls == 2){
+                return --turns;
+            }
+        }
+
+        // specs
+        
+        describe('check for outputs', () =>{
+            xit('should check for total score of any player', () =>{
+                
+            });
+
+            xit('should check for leader', () =>{
+                //assign
+                let player1 = {
+                    firstRoll: 3,
+                    secondRoll: 5
+                }
+                let player2 = {
+                    firstRoll: 4,
+                    secondRoll: 9
+                }
+                var leader = new leader();
+                //act
+                var score1 = player1.firstRoll + player1.secondRoll;
+                var score2 = player2.firstRoll + player2.secondRoll;
+
+                // let totalPins = player1.firstRoll + player1.secondRoll;
+                // let totalPins = player2.firstRoll + player2.secondRoll;
+                
+                //assert
+                expect(totalPins).toBe(13);
+            });
+            
+            it('should return score', () =>{
+                //assign
+                let player1 = {
+                    firstRoll: 3,
+                    secondRoll: 7
+                }
+                let totalPins = player1.firstRoll + player1.secondRoll;
+
+                //act
+                
+                //assert
+                expect(totalPins).toBe(10);
+            });
+
+            it('check for turns', () =>{
+                //assign
+                let turns = 10;
+                let player1 = {
+                    firstRoll: 2,
+                    secondRoll: 5
+                }
+                var playerScore = getScore(player1.firstRoll, player1.secondRoll);
+                //act
+                var turnsLeft = numOfTurnsLeft(playerScore, Object.keys(player1).length, turns);
+                //assert
+                expect(turnsLeft).toBe(9);
+            });
+
+            xit('should check whose turn it is now', () =>{
+                //assign
+                
+            });
+
+            xit('should check whose turn is it next', () =>{
+                
+            });
+    
+            it('should check for names', () =>{
+             //assign
+             let player1 = 'Mike';
+             let player2 = 'Ike';
+
+             //act
+             let playerNames = players(player1, player2);
+
+             //assert
+             expect(playerNames).toBe('Player 1s name is Mike. Player 2s name is Ike');
+         });
+        
+         it('should check for a strike', () =>{
+             //assign
+             let player1 = {
+                 firstRoll: 10
+             }
+
+             //act
+             var strike = checkStrike(player1.firstRoll);
+
+             //assert
+             expect(strike).toBe(`Its a STRIKE`);
+         });
+
+         it('should check for a spare', () =>{
+             //assign
+             let player1 = {
+                 firstRoll: 5,
+                 secondRoll: 5
+             }
+
+             //act
+             var spare = checkSpare(player1.firstRoll, player1.secondRoll);
+
+             //assert
+             expect(spare).toBe(`Its a SPARE`);
+         });
+
+        });
+
+    </script>
+        
+
+
+
+
+</html> 
